@@ -61,8 +61,11 @@ const std::string Foo<std::string>::message = "Hello World";
 int main(){
    std:: cout << greeting; // prints nothing
 }
- § Specialisations are not allowed in class scope
+```
 
+### Member template specialisations are not allowed in class scope ###
+
+```C++
 class Foo{
   template <typename T> struct Bar;
   struct Bar<char>; // raises [ESC, ESN]
