@@ -4,14 +4,14 @@ This document summarises typical errors encountered when porting template heavy 
 
 Relevant errors are annotated using three letter codes summarised at the end of this article.
 
-### Use of typename ###
+### Use of `typename` ###
 
-Use typename ahead of qualified names. Do not use typename ahead of typedef'd aliases.
+Use `typename` ahead of qualified names. Do not use `typename` ahead of `typedef`'d aliases.
 
-EQN if 'typename' is found ahead of typedef'd names.
-UTN if 'typename' is missing ahead of qualified names.
+EQN if `typename` is found ahead of typedef'd names.
+UTN if `typename` is missing ahead of qualified names.
 
-### Use of template ###
+### Use of `template` ###
 
 Occasionally clang may issue UTK (pending clarification).
 
@@ -23,7 +23,7 @@ Exclude default template arguments from out of line member definitions (CAD)
 
 Do not repeat class templates ahead of inline function definitions (DTS, NTT)
 
-### Redefining template parameters using typedef ###
+### Redefining template parameters using `typedef` ###
 
 GCC and Clang do not allow this (DTS).
 
@@ -54,13 +54,11 @@ class Foo{
 
 std::string greeting = Foo<std::string>::message;  // Causes template instantiation
 
-// Specialisation. 
+// Specialisation
 template <>
 const std::string Foo<std::string>::message = "Hello World";
 
-int main(){
-   std:: cout << greeting; // prints nothing
-}
+int main(){ std::cout<<greeting; /* prints nothing */ }
 ```
 
 ### Member template specialisations are not allowed in class scope ###
@@ -81,7 +79,8 @@ Reference [here](http://en.cppreference.com/w/cpp/language/template_specializati
 ### Clang ###
 
 ```
-[CAD] Cannot add a default template argument to the definition of a member of a class template [DTS] Declaration of 'T' shadows template parameter 
+[CAD] Cannot add a default template argument to the definition of a member of a class template 
+[DTS] Declaration of 'T' shadows template parameter 
 [EPF] Expected '(' for function-style cast or type construction 
 [ESA] Explicit specialisation of T after instantiation 
 [ESC] Explicit specialisation of T in class scope 
