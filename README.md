@@ -23,7 +23,7 @@ Exclude default template arguments from out of line member definitions (CAD)
 
 Do not repeat class templates ahead of inline function definitions (DTS, NTT)
 
-### Redefining template parameters using `typedef` ###
+### Redefine template parameters using `typedef` ###
 
 GCC and Clang do not allow this (DTS).
 
@@ -34,7 +34,29 @@ struct Foo{
     typedef T Td;    // Correct
 };
 ```
- 
+### Short-name parameterised types using `typedef` ###
+
+Given `T<SomeTypeParameter>` that you would short-name `T`, 
+GCC requires a fully qualified name; for example:
+
+```C++
+template <typename T> class Awe{ T member; };
+class Some{};
+class Stuff{
+    // typedef Awe<Some> Awe; // Raises [DOT]
+    typedef ::Awe<Some> Awe;  // OK
+};
+
+namespace Within{
+    template <typename T> class Awe{ T member; };
+    class Some{};
+    class Stuff{
+        // typedef Awe<Some> Awe;       // Raises [DOT]
+        typedef Within::Awe<Some> Awe;  // OK
+    };
+}
+```
+
 ### Specialise ahead of template instantiation ###
 
 Within a translation unit, whatever may cause template instantiation may forbid later specialisation, or cause said specialisation to be ignored.
@@ -94,4 +116,5 @@ Reference [here](http://en.cppreference.com/w/cpp/language/template_specializati
 
 ```
 [ESN] Explicit specialisation in non namespace scope
+[DOT] Declaration of typedef T changes meaning of 'T' from ... [-fpermissive]
 ```
