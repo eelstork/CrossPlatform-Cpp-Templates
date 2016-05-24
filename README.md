@@ -34,7 +34,7 @@ struct Foo{
     typedef T Td;    // Correct
 };
 ```
-### Short-name parameterised types using `typedef` ###
+### Shortname parameterised types with `typedef` or `using` ###
 
 Given `T<SomeTypeParameter>` that you would short-name `T`, 
 GCC requires a fully qualified name; for example:
@@ -56,6 +56,8 @@ namespace Within{
     };
 }
 ```
+
+Likewise, shortnaming `T<WithParam>` with `using T = T<WithParam>` will cause an error; shortname with `using T = fully::qualified::name::T<WithParam>`
 
 ### Specialise ahead of template instantiation ###
 
@@ -117,4 +119,5 @@ Reference [here](http://en.cppreference.com/w/cpp/language/template_specializati
 ```
 [ESN] Explicit specialisation in non namespace scope
 [DOT] Declaration of typedef T changes meaning of 'T' from ... [-fpermissive]
+
 ```
